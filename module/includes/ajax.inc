@@ -40,8 +40,7 @@ function contactbook_ajax_edit_contact($type, $contact_id) {
 		
 		$contact = contactbook_get_contact_by_id($contact_id);		
 		
-		$commands[] = ajax_command_invoke('#edit-adding-contact', 'removeClass', array('collapsed'));
-		$commands[] = ajax_command_invoke('.default-pic-div', 'removeClass', array('default-pic-div'));
+		$commands[] = ajax_command_invoke('#edit-adding-contact', 'removeClass', array('collapsed'));		
 		$commands[] = ajax_command_invoke('#edit-adding-contact .fieldset-wrapper', 'attr', array('style', 'display:block'));
 		$commands[] = ajax_command_invoke('input[name="contact_id"]', 'attr', array('value', $contact->id));
 		$commands[] = ajax_command_invoke('#edit-full-name', 'attr', array('value', $contact->full_name));
@@ -50,9 +49,15 @@ function contactbook_ajax_edit_contact($type, $contact_id) {
     
 		
 		$image = file_load($contact->contact_image_fid);
-		
-		$commands[] = ajax_command_replace('#contact-image-div', '<div id="contact-image-div"><label>Current Image</label></BR>'.theme('image_style', array('style_name' => 'thumbnail', 'path' => $image->uri)).'<div class="description">Uploading New Image will Replace This Image</div></div>');
-		
+		if($image){
+			$commands[] = ajax_command_invoke('#pic-div', 'removeClass', array('default-pic-div'));
+			$commands[] = ajax_command_replace('#contact-image-div', '<div id="contact-image-div">'.theme('image_style', array('style_name' => 'thumbnail', 'path' => $image->uri)).'<div class="description">Uploading New Image will Replace This Image</div></div>');
+		}else {
+			module_load_include('inc', 'contactbook', 'includes/util');
+			$con_image = contactbook_get_defualt_image_html();
+			$commands[] = ajax_command_replace('#contact-image-div', '<div id="contact-image-div">'.$con_image.'<div class="description">Uploading New Image will Replace This Image</div></div>');
+			$commands[] = ajax_command_invoke('#pic-div', 'addClass', array('default-pic-div'));
+		}
 		$ret = array('#type' => 'ajax', '#commands' => $commands);
     ajax_deliver($ret);		
 

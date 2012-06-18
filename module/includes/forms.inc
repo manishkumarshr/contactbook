@@ -53,15 +53,19 @@ function contactbook_contact_address_book_form($form, &$form_state) {
 		'#type' => 'textfield',
 		'#size' => 40,
 	);
-
+	
+	module_load_include('inc', 'contactbook', 'includes/util');
+	$con_image = contactbook_get_defualt_image_html();
+	
 	$form['adding_contact']['current_contact_image'] = array(
 		'#type' => 'item',
-		'#markup' => '<div id="contact-image-div"></div>',
+		'#title' => 'Current Image',
+		'#markup' => '<div id="contact-image-div">' . $con_image . '</div>',
 	);
   
 	$form['adding_contact']['remove_image_use_default'] = array(
 		'#type' => 'checkbox',
-		'#prefix' => '<div class="default-pic-div">',
+		'#prefix' => '<div id="pic-div" class="default-pic-div">',
 		'#suffix' => '</div>',
 		'#title' => 'Remove this image and use default',
 		'#default_value' => false,
@@ -69,7 +73,7 @@ function contactbook_contact_address_book_form($form, &$form_state) {
 	
 	//$del = l(t('Upload'), sprintf("contactbook/%s/contact/%s/delete", 'nojs', 'manish'), array('attributes' => array('class' => array('use-ajax'))));
 	$form['adding_contact']['contact_image'] = array(
-		'#title' => t('Contact Image'),
+		'#title' => t('Upload Contact Image'),
 		'#type' => 'file',
 		//'#suffix' => $del,
 		'#size' => 30,
@@ -116,7 +120,7 @@ function contactbook_contact_address_book_form_submit($form, &$form_state) {
   file_prepare_directory($dir, FILE_CREATE_DIRECTORY);
 
   $validators = array(
-      'file_validate_extensions' => array('jpg jpeg png gif'),
+		'file_validate_extensions' => array('jpg jpeg png gif'),
   );
   $file = file_save_upload('contact_image', $validators, $dir, FILE_EXISTS_RENAME);
 	
@@ -128,8 +132,13 @@ function contactbook_contact_address_book_form_submit($form, &$form_state) {
 	if ($file) {
     // Very important to do this or file will be deleted on cron
 		$file->status = FILE_STATUS_PERMANENT;
+		
 		$object->contact_image_fid = $file->fid;
   }
+	
+	if(($v['remove_image_use_default']) && $v['contact_id']) {
+		$object->contact_image_fid = "";
+	}
 	
 	if($v['op'] == 'Save') {
 		drupal_write_record('contact_address_book', $object, $keys);

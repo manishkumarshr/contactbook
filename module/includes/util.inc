@@ -12,6 +12,9 @@ function contactbook_create_tabular_format_display($all_contacts) {
 				$image = file_load($contact->contact_image_fid);
 				$con_image = theme('image_style', array('style_name' => 'thumbnail', 'path' => $image->uri));
 			}
+			else {
+				$con_image = contactbook_get_defualt_image_html();
+			}
 			$del = l(t('Delete'), sprintf("contactbook/%s/contact/%s/delete", 'nojs', $contact->id), array('attributes' => array('class' => array('use-ajax'))));
 			$edit = l(t('Edit'), sprintf("contactbook/%s/contact/%s/edit", 'nojs', $contact->id), array('attributes' => array('class' => array('use-ajax'))));
 			$data[] =  array($con_image, $contact->full_name, '+'.$contact->calling_code .'-'. $contact->phone_number, $contact->email, $edit. ' / ' .$del);
@@ -27,4 +30,12 @@ function contactbook_create_tabular_format_display($all_contacts) {
 	
 	return $table_output;
 	
+}
+
+function contactbook_get_defualt_image_html() {
+	$module_path = drupal_get_path('module', 'contactbook');	
+	$path = $module_path . '/images/default_profile.jpg';
+	$image_path = file_create_url($path);
+	$con_image = sprintf('<img alt="" src="%s" height="75" width="100">', $image_path);
+	return $con_image;
 }
