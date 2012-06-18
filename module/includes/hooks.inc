@@ -42,7 +42,7 @@ function contactbook_menu() {
 	$items = array();
 
   $items['admin/config/contactbook'] = array(
-		'title' => 'Contact Book',
+		'title' => t('Contact Book'),
 		'position' => 'right',
 		'page callback' => 'system_admin_menu_block_page',
 		'access arguments' => array('administer site configuration'),
@@ -51,7 +51,7 @@ function contactbook_menu() {
   );
 	
 	$items['admin/config/contactbook/settings'] = array(
-		'title' => 'Contact Book Settings',
+		'title' => t('Contact Book Settings'),
 		'page callback' => 'drupal_get_form',
 		'page arguments' => array('contactbook_admin_settings_form'),
 		'access arguments' => array('administer site configuration'),
@@ -59,7 +59,7 @@ function contactbook_menu() {
   );
 		
 	$items['my-contact-book'] = array(
-		'title' => 'Contact book - Manage Contacts',
+		'title' => t('Contact book - Manage Contacts'),
 		'page callback' => 'contactbook_manage_form',
 		'file' => 'includes/forms.inc',
 		'access arguments' => array('manage contactbook'),

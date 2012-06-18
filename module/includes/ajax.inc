@@ -8,9 +8,9 @@ function contactbook_ajax_delete_contact($type, $contact_id){
  
   if ($type == 'ajax') {
 		if(contactbook_delete_contact_by_id($contact_id)){
-			$msg = "Contact has been deleted successfully";
+			$msg = t("Contact has been deleted successfully");
 		}else{
-			$msg = "Could not delete this contact";
+			$msg = t("Could not delete this contact");
 		}		
 		
 		$all_contacts = contactbook_get_all_saved_contact(NULL);

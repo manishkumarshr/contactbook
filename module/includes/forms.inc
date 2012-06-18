@@ -67,15 +67,13 @@ function contactbook_contact_address_book_form($form, &$form_state) {
 		'#type' => 'checkbox',
 		'#prefix' => '<div id="pic-div" class="default-pic-div">',
 		'#suffix' => '</div>',
-		'#title' => 'Remove this image and use default',
+		'#title' => t('Remove this image and use default'),
 		'#default_value' => false,
 	);
 	
-	//$del = l(t('Upload'), sprintf("contactbook/%s/contact/%s/delete", 'nojs', 'manish'), array('attributes' => array('class' => array('use-ajax'))));
 	$form['adding_contact']['contact_image'] = array(
 		'#title' => t('Upload Contact Image'),
 		'#type' => 'file',
-		//'#suffix' => $del,
 		'#size' => 30,
 	);
 	
@@ -109,11 +107,11 @@ function contactbook_contact_address_book_form_submit($form, &$form_state) {
 	if($v['contact_id'] != "") {
 		$keys = array('id');
 		$object->id = $v['contact_id'];
-		$msg = 'updated';
+		$msg = t('updated');
 	}
 	else {
 		$keys = array();
-		$msg = 'saved';
+		$msg = t('saved');
 	}
 	
 	$dir = 'public://contactbook/contact-images/';

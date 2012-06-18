@@ -1,7 +1,7 @@
 <?php
 
 function contactbook_create_tabular_format_display($all_contacts) {
-	$headers = array('Image', 'Full Name', 'Number', 'Email', 'Action');
+	$headers = array(t('Image'), t('Full Name'), t('Number'), t('Email'), t('Action'));
 	$data = array();
 	
 	if(count($all_contacts)){
