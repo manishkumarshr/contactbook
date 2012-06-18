@@ -1,0 +1,46 @@
+<?php
+module_load_include('inc', 'contactbook', 'includes/hooks');
+
+function contactbook_get_all_saved_contact($key = NULL) {
+  
+	$query = db_select('contact_address_book', 'cab');
+	if($key) {
+		$query->condition('full_name', db_like($key) . '%', 'LIKE');
+	}
+	$query->fields('cab');
+  $query->orderBy('cab.full_name','ASC');
+  $query = $query->extend('TableSort')->extend('PagerDefault')->limit(5);
+  $result = $query->execute();
+
+  $contacts = array();
+  foreach ($result as $r) {
+    $contacts[] = $r;
+  }
+	
+  return $contacts;
+}
+
+function contactbook_get_contact_by_id($con_id) {
+  
+	$query = db_select('contact_address_book', 'cab');	
+	$query->condition('cab.id', $con_id);
+	$query->fields('cab');
+  
+  $result = $query->execute();
+
+  $current_contact = $result->fetchObject();
+  return $current_contact;
+}
+
+function contactbook_delete_contact_by_id($id){
+  $query = db_delete('contact_address_book')
+          ->condition('id', $id);
+  $result = $query->execute();
+
+  if ($result) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}

@@ -1,0 +1,75 @@
+<?php
+function contactbook_schema() {
+  $items = array();
+	
+  $items['contact_address_book'] = contactbook_table_contact_address_book();
+  return $items;
+}
+
+function contactbook_table_contact_address_book() {
+	return array(
+      'description' => 'TODO: please describe this table!',
+      'fields' => array(
+          'id' => array(
+						'description' => 'TODO: please describe this field!',
+						'type' => 'serial',
+						'not null' => TRUE,
+          ),
+					'full_name' => array(
+						'description' => 'TODO: please describe this field!',
+						'type' => 'varchar',
+						'length' => '255',
+						'not null' => TRUE,
+          ),
+					'phone_number' => array(
+						'description' => 'TODO: please describe this field!',
+						'type' => 'varchar',
+						'length' => '255',
+						'not null' => TRUE,
+          ),
+					'email' => array(
+						'description' => 'TODO: please describe this field!',
+						'type' => 'varchar',
+						'length' => '255',
+						'not null' => FALSE,
+          ),
+					'contact_image_fid' => array(
+						'description' => 'TODO: please describe this field!',
+						'type' => 'int',
+						'not null' => FALSE,
+          ),
+					'calling_code' => array(
+						'description' => 'TODO: please describe this field!',
+						'type' => 'varchar',
+						'length' => '255',
+						'not null' => TRUE,
+          ),	
+      ),
+      'primary key' => array('id'),
+  );
+}
+
+function contactbook_update_7000() {
+  $items = array();
+
+  $items[] = db_query("
+    CREATE TABLE {contact_address_book} (
+      id int not null auto_increment primary key,
+      full_name varchar(255) not null,
+      phone_number varchar(255) not null,
+      email varchar(255) null default null
+    )");
+	return $items;
+}
+
+function contactbook_update_7001() {
+  $items = array();
+	$items[] = db_query("ALTER TABLE {contact_address_book} ADD contact_image_fid INT NULL DEFAULT NULL");
+  return $items;
+}
+
+function contactbook_update_7002() {
+  $items = array();
+	$items[] = db_query("ALTER TABLE {contact_address_book} ADD calling_code varchar(255) NOT NULL");
+  return $items;
+}

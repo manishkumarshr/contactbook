@@ -1,0 +1,12 @@
+name = Contact Book
+description = Store and manage your contacts - phone numbers and emails.
+core = 7.x
+
+files[] = includes/hooks.inc
+files[] = includes/theme.inc
+files[] = includes/forms.inc
+files[] = includes/ajax.inc
+files[] = includes/admin.inc
+files[] = includes/util.inc
+
+configure = admin/config/contactbook

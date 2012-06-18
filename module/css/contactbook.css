@@ -1,0 +1,31 @@
+#contact-book-form {
+	float:left;
+	width: 100%;
+}
+#contact-book-form #display-contacts{
+	
+}
+#contact-book-form  #add-contacts{
+	
+}
+#contactbook_contact_list_wrapper {
+	float: left;
+	width: 100%;
+}
+
+.page-my-contact-book  .form-item-calling-code {
+	float: left;
+}
+
+.page-my-contact-book  .form-item-email {
+	clear: both;
+}
+
+.page-my-contact-book  .form-item-phone-number {
+	float: left;
+  margin-left: 20px;
+}
+
+.page-my-contact-book  .default-pic-div {
+	display: none;
+}
